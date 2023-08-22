@@ -1,23 +1,27 @@
 import type { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse, InternalAxiosRequestConfig } from 'axios'
 import axios from 'axios'
 import defu from 'defu'
-import type { CustomOptions, RequestOptions, RequestSubOptions } from './type'
-import { isFunction } from './utils'
+import type { Cache, CustomOptions, RequestOptions, RequestSubOptions } from './type'
+import { getPendingKey, isFunction } from './utils'
 import { AxiosCanceler } from './cancel'
 
 export { CustomOptions, RequestOptions, RequestSubOptions }
+
 export class Http {
   /** 当前axios对象实例 */
   private instance: AxiosInstance
   /** 实例化对象时传入的配置 */
   private readonly options: RequestOptions
+  /** 缓存对象 */
+  private cache?: Cache
 
   constructor(options: RequestOptions) {
     this.options = options
     const newOptions = Object.assign(this.defaultConfig, options)
 
     this.instance = axios.create(newOptions)
-
+    if (newOptions.cache)
+      this.cache = newOptions.cache
     this.setupInterceptors()
   }
 
@@ -27,6 +31,8 @@ export class Http {
       key: null,
       ignoreCancelToken: true,
       transform: {},
+      retryCount: 3,
+      cache: null,
     }
   }
 
@@ -95,6 +101,12 @@ export class Http {
     if (transform?.beforeRequestHook && isFunction(transform.beforeRequestHook))
       conf = transform.beforeRequestHook(conf)
 
+    const cacheKey = getPendingKey(conf)
+    if (this.cache && !conf.ignoreCache) {
+      const cacheData = this.cache.get(cacheKey)
+      if (cacheData)
+        return Promise.resolve(cacheData)
+    }
     // conf = this.supportFormData(conf)
 
     return new Promise((resolve, reject) => {
@@ -112,7 +124,7 @@ export class Http {
               return
             }
           }
-
+          this.cache && !conf.ignoreCache && this.cache.set(cacheKey, response)
           resolve(response as unknown as Promise<T>)
         })
         .catch((e: Error | AxiosError) => {

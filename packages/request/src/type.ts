@@ -5,6 +5,16 @@ export type RequestOptions = CustomOptions & AxiosRequestConfig
 export interface RequestSubOptions extends Omit<RequestOptions, 'method' | 'limit' | 'cache'> {
 
   transform?: Partial<Pick<AxiosTransform, 'beforeRequestHook' | 'requestCatchHook' | 'transformRequestHook'>>
+  ignoreCache?: boolean
+}
+
+export abstract class Cache {
+  get(key: string): any {}
+
+  set(key: string, value: any): void {}
+
+  delete?: (key: string) => void
+  clear?: () => void
 }
 
 /**
@@ -30,5 +40,13 @@ export interface CustomOptions {
    * @description 请求期间的hook
    */
   transform?: AxiosTransform
+
+  /**
+   * @description 请求失败后，重试的次数
+   * @default 3
+   */
+  retryCount?: number
+
+  cache?: Cache | undefined | null
 
 }
