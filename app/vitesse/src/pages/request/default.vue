@@ -11,6 +11,14 @@ function requestSuccess() {
   //   hitokoto.value = res.data.hitokoto
   // })
 }
+function requestSuccess2() {
+  defaultRequest.success1().then((res) => {
+    hitokoto.value = res.data.hitokoto
+  })
+  // defaultRequest.success().then((res) => {
+  //   hitokoto.value = res.data.hitokoto
+  // })
+}
 function requestError() {
   defaultRequest.error()
 }
@@ -24,8 +32,11 @@ function requestError() {
       <button btn @click="requestSuccess">
         请求一下 success
       </button>
+      <button btn @click="requestSuccess2">
+        请求一下 success2
+      </button>
       <button btn @click="requestError">
-        请求一下 success
+        请求一下 error
       </button>
     </div>
   </div>

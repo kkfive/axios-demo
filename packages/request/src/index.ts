@@ -5,7 +5,7 @@ import type { CustomOptions, RequestOptions, RequestSubOptions } from './type'
 import { isFunction } from './utils'
 import { AxiosCanceler } from './cancel'
 
-export { CustomOptions }
+export { CustomOptions, RequestOptions, RequestSubOptions }
 export class Http {
   /** 当前axios对象实例 */
   private instance: AxiosInstance
