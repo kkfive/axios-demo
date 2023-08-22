@@ -13,7 +13,7 @@
   "devDependencies": {
     "typescript": "^5.1.6",
     "@antfu/eslint-config": "^0.40.2",
-    "@unocss/eslint-config": "^0.53.5",
+    "@unocss/eslint-config": "^0.55.2",
     "eslint": "^8.47.0"
   }
 }
