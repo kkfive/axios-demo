@@ -21,6 +21,7 @@ export abstract class Cache {
  * 自定义请求配置
  */
 export interface CustomOptions {
+  [key: string]: any
 
   /**
    * @description 自定义key的运算规则
