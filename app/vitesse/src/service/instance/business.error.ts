@@ -1,6 +1,6 @@
 import { ElNotification } from 'element-plus'
 
-export function checkStatus(status: number, msg: string = '') {
+export function checkHttpStatus(status: number, msg: string = '') {
   let errMessage = ''
 
   switch (status) {
@@ -50,4 +50,15 @@ export function checkStatus(status: number, msg: string = '') {
 
   if (errMessage)
     ElNotification.error({ message: errMessage, type: 'error' })
+}
+
+export function checkBusinessStatus<T = any>(res: T) {
+  // 根据实际业务取出数据,并作响应处理
+  const { errorCode, errorMessage } = res as any
+
+  switch (errorCode) {
+    case 401:
+      // TODO: 用户未登录 跳转登录页面
+      break
+  }
 }

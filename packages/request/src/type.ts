@@ -6,6 +6,7 @@ export interface RequestSubOptions extends Omit<RequestOptions, 'method' | 'limi
 
   transform?: Partial<Pick<AxiosTransform, 'beforeRequestHook' | 'requestCatchHook' | 'transformRequestHook'>>
   ignoreCache?: boolean
+
 }
 
 export abstract class Cache {
@@ -21,7 +22,6 @@ export abstract class Cache {
  * 自定义请求配置
  */
 export interface CustomOptions {
-  [key: string]: any
 
   /**
    * @description 自定义key的运算规则
@@ -50,4 +50,14 @@ export interface CustomOptions {
 
   cache?: Cache | undefined | null
 
+  /**
+   * @description 是否返回原始响应
+   * @default false
+   */
+  isRawResponse?: boolean
+  /**
+    * @description 是否转换请求响应
+    * @default true
+    */
+  isTransformResponse?: boolean
 }

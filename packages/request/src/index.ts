@@ -16,9 +16,8 @@ export class Http {
   private cache?: Cache
 
   constructor(options: RequestOptions) {
-    this.options = options
     const newOptions = Object.assign(this.defaultConfig, options)
-
+    this.options = newOptions
     this.instance = axios.create(newOptions)
     if (newOptions.cache)
       this.cache = newOptions.cache
@@ -33,6 +32,8 @@ export class Http {
       transform: {},
       retryCount: 3,
       cache: null,
+      isRawResponse: false,
+      isTransformResponse: true,
     }
   }
 

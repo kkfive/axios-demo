@@ -11,4 +11,5 @@ export default {
   error404: () => http.get('/error/http/404'),
   error500: () => http.get('/error/http/500', { key: () => Math.random().toString() }),
   error502: () => http.get('/error/http/502'),
+  errorBusiness401: () => http.get('/error/business/401'),
 }

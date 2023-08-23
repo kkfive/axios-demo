@@ -3,7 +3,7 @@
  */
 import type { AxiosRequestConfig, AxiosResponse } from 'axios'
 import type { InternalAxiosRequestConfig } from 'axios'
-import type { RequestOptions } from './type'
+import type { RequestOptions, RequestSubOptions } from './type'
 
 export abstract class AxiosTransform {
   /**
@@ -18,7 +18,7 @@ export abstract class AxiosTransform {
    */
   transformRequestHook?: <T>(
     response: AxiosResponse<T>,
-    options: RequestOptions,
+    options: RequestOptions & RequestSubOptions,
   ) => any
 
   /**

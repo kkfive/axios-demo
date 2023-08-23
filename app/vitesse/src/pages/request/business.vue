@@ -30,6 +30,9 @@ async function handleHttpError500() {
 function handleHttpError502() {
   request.error502()
 }
+function handleBusinessError401() {
+  request.errorBusiness401()
+}
 </script>
 
 <template>
@@ -37,8 +40,8 @@ function handleHttpError502() {
     请求结果：{{ str || '暂未请求' }}
     <div>业务状态码错误</div>
     <div flex justify-center gap-2>
-      <button btn>
-        未登录
+      <button btn @click="handleBusinessError401">
+        error 401
       </button>
     </div>
 

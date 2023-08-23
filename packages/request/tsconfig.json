@@ -1,5 +1,9 @@
 {
   "compilerOptions": {
+    "declaration": true,
+    "declarationDir": "./dist",
+    "sourceMap": true,
+    "outDir": "./dist",
     "baseUrl": ".",
     "module": "ESNext",
     "target": "ESNext",
